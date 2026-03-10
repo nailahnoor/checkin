@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STUDENT TROUPE STATUS</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; text-transform: lowercase; }
+  body { font-family: 'Montserrat', sans-serif; background: #fce2b3; padding: 16px; }
+  .card { max-width: 520px; margin: auto; background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.2); overflow: hidden; }
+  .header { border-top: 10px solid #f39c12; padding: 24px; }
+  h2 { margin: 0 0 8px 0; font-weight: 700; text-transform: uppercase; }
+  .subtext { margin: 0; font-size: 16px; }
+  .section { padding: 24px; }
+  .input-wrap { width: 100%; position: relative; }
+  input[type="text"] { width: 100%; padding: 12px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; font-family: 'Montserrat', sans-serif; }
+  input::placeholder { font-family: 'Montserrat', sans-serif; font-size: 16px; color: #555; }
+  .suggestions { width: 100%; background: #fff; border: 1px solid #ccc; border-top: none; max-height: 220px; overflow-y: auto; display: none; margin-top: -1px; }
+  .suggestions div { padding: 10px 12px; cursor: pointer; }
+  .suggestions div:hover { background: #f2f2f2; }
+  .error { color: #c62828; font-size: 14px; margin-top: 6px; display: none; text-align: center; }
+  .footer { padding: 16px 24px 24px; text-align: center; }
+  button { background: #d84315; color: #fff; border: none; padding: 12px 28px; font-weight: 600; border-radius: 4px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 16px; }
+  button:disabled { opacity: 0.6; cursor: not-allowed; }
+  .status { padding: 16px 24px; font-weight: 600; display: none; text-align: center; border-radius: 6px; margin-top: 16px; }
+  .status.active { color: #2e7d32; background: #e8f5e9; }
+  .status.inactive { color: #c62828; background: #ffebee; }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="header">
+    <h2>STUDENT TROUPE STATUS</h2>
+    <p class="subtext">please select your name from the dropdown list.</p>
+  </div>
+
+  <div class="section">
+    <div class="input-wrap">
+      <input type="text" id="nameInput" placeholder="start typing here..." autocomplete="off">
+      <div id="suggestions" class="suggestions"></div>
+    </div>
+    <div id="nameError" class="error"></div>
+    <div id="statusMsg" class="status"></div>
+  </div>
+
+  <div class="footer">
+    <button id="submitBtn" onclick="checkStatus()">see my status</button>
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = "YOUR_STATUS_SCRIPT_URL"; // replace with your Apps Script URL
+
+let names = [];
+const input = document.getElementById('nameInput');
+const box = document.getElementById('suggestions');
+const btn = document.getElementById('submitBtn');
+const error = document.getElementById('nameError');
+const statusDiv = document.getElementById('statusMsg');
+
+// fetch names for suggestions
+fetch(`${SCRIPT_URL}?action=getNames`)
+  .then(r => r.json())
+  .then(data => names = data)
+  .catch(console.error);
+
+input.addEventListener('focus', () => renderList(names));
+input.addEventListener('input', () => {
+  const value = input.value.toLowerCase();
+  renderList(names.filter(n => n.toLowerCase().includes(value)));
+});
+
+function renderList(list) {
+  box.innerHTML = '';
+  if (!list.length) { box.style.display = 'none'; return; }
+  list.forEach(name => {
+    const div = document.createElement('div');
+    div.textContent = name;
+    div.onclick = () => { input.value = name; box.style.display = 'none'; };
+    box.appendChild(div);
+  });
+  box.style.display = 'block';
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.input-wrap')) box.style.display = 'none';
+});
+
+function checkStatus() {
+  const name = input.value.trim();
+  error.style.display = 'none';
+  statusDiv.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'checking…⏳';
+
+  fetch(`${SCRIPT_URL}?name=${encodeURIComponent(name)}`)
+    .then(r => r.json())
+    .then(res => {
+      btn.disabled = false;
+      btn.textContent = 'see my status';
+      if(res.status === 'error') {
+        error.textContent = res.message;
+        error.style.display = 'block';
+        return;
+      }
+      const isActive = res.activeStatus.toUpperCase() === 'ACTIVE';
+      statusDiv.textContent = `${res.name}, your status is ${res.activeStatus}. ${res.message}`;
+      statusDiv.className = `status ${isActive ? 'active' : 'inactive'}`;
+      statusDiv.style.display = 'block';
+    })
+    .catch(() => {
+      btn.disabled = false;
+      btn.textContent = 'see my status';
+      error.textContent = "oops! something went wrong.";
+      error.style.display = 'block';
+    });
+}
+</script>
+
+</body>
+</html>
