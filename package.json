@@ -1,29 +1,26 @@
 {
-  "name": "studentstatus-main",
+  "name": "checkin-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "check-in app using Next.js + Google Sheets",
   "main": "index.js",
   "dependencies": {
     "googleapis": "^173.0.0",
     "next": "^9.3.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "vercel-build": "next build"
+  },
+  "engines": {
+    "node": "18.x"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nailahnoor/nnbdstudentstatus.git"
+    "url": "https://github.com/nailahnoor/checkin.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nailahnoor/nnbdstudentstatus/issues"
-  },
-  "homepage": "https://github.com/nailahnoor/nnbdstudentstatus#readme"
+  "license": "ISC"
 }
