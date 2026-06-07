@@ -1,0 +1,364 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+/* ========================= */
+/* GLOBAL RESET
+/* ========================= */
+
+* {
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: lowercase;
+  text-shadow: none !important;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  background: #ffdd00;
+  color: #0b5394;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  overflow-x: hidden;
+  height: 100%;
+}
+
+/* root body behavior fix */
+body {
+  min-height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  overflow-y: auto;
+}
+
+/* ========================= */
+/* LINKS
+/* ========================= */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ========================= */
+/* PAGE WRAPPER (MATCHES CONTAINER SYSTEM)
+/* ========================= */
+
+.page-wrapper {
+  width: 100%;
+
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 24px;
+
+  gap: 10px;
+}
+
+/* ========================= */
+/* LOGO
+/* ========================= */
+
+.logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 6px;
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+  object-fit: contain;
+
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+/* ========================= */
+/* CARD (UNIFIED CONTENT CONTAINER)
+/* ========================= */
+
+.card {
+  width: 100%;
+  max-width: 400px;
+
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+
+  border-radius: 18px;
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  border: 2px solid rgba(0, 187, 255, 0.543);
+
+  box-shadow:
+    0 10px 30px rgba(11, 83, 148, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+
+  /* 🔥 mobile-safe height system */
+  max-height: calc(100dvh - 48px);
+  overflow: hidden;
+}
+
+/* ========================= */
+/* HEADER
+/* ========================= */
+
+.header {
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+h2 {
+  margin: 0;
+
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  color: #0b5394;
+}
+
+.subtext {
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  color: #0b5394;
+  opacity: 0.9;
+}
+
+/* ========================= */
+/* INPUT SYSTEM
+/* ========================= */
+
+.section {
+  width: 100%;
+}
+
+.input-wrap {
+  position: relative;
+  width: 100%;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 14px;
+
+  border-radius: 14px;
+  border: 2px solid rgba(0, 187, 255, 0.4);
+
+  font-size: 15px;
+
+  background: rgba(255, 255, 255, 0.9);
+  color: #0b5394;
+
+  transition: all 0.2s ease;
+}
+
+input::placeholder {
+  color: rgba(11, 83, 148, 0.45);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: #00bbff;
+  box-shadow: 0 0 0 3px rgba(0, 187, 255, 0.25);
+}
+
+/* ========================= */
+/* SUGGESTIONS DROPDOWN
+/* ========================= */
+
+.suggestions {
+  width: 100%;
+
+  background: white;
+
+  border: 2px solid rgba(0, 187, 255, 0.25);
+  border-top: none;
+
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+
+  max-height: 220px;
+  overflow-y: auto;
+
+  display: none;
+
+  position: relative;
+  margin-top: -2px;
+  z-index: 10;
+}
+
+.suggestions div {
+  padding: 12px 14px;
+
+  cursor: pointer;
+  font-size: 15px;
+  color: #0b5394;
+}
+
+.suggestions div:hover {
+  background: rgba(0, 187, 255, 0.08);
+}
+
+/* ========================= */
+/* ERROR
+/* ========================= */
+
+.error {
+  display: none;
+
+  margin-top: 6px;
+
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+
+  color: #c62828;
+}
+
+/* ========================= */
+/* BUTTON SYSTEM
+/* ========================= */
+
+.footer {
+  margin-top: 0;
+}
+
+button,
+.claimBtn {
+  width: 100%;
+  padding: 14px 16px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #ff9900;
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+  box-shadow:
+    0 6px 18px rgba(255, 153, 0, 0.25),
+    0 0 0 1px rgba(11, 83, 148, 0.15);
+}
+
+button:hover,
+.claimBtn:hover {
+  background: #ffad33;
+  transform: translateY(-2px);
+}
+
+button:active,
+.claimBtn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================= */
+/* STATUS BOX (RED / GREEN CONTROLLED) */
+/* ========================= */
+
+.status {
+  display: none;
+
+  margin-top: 18px;
+  padding: 18px;
+
+  text-align: center;
+  font-weight: 600;
+
+  border-radius: 14px;
+  font-size: 14px;
+
+  transition: all 0.2s ease;
+}
+
+/* ✅ SUCCESS (GREEN) */
+.status.valid,
+.status.active,
+.status.success {
+  display: block;
+
+  background: rgba(76, 175, 80, 0.12);
+  color: #2e7d32;
+  border: 1px solid rgba(76, 175, 80, 0.25);
+}
+
+/* ❌ ERROR (RED) */
+.status.invalid,
+.status.error,
+.status.inactive {
+  display: block;
+
+  background: rgba(244, 67, 54, 0.12);
+  color: #c62828;
+  border: 1px solid rgba(244, 67, 54, 0.25);
+}
+
+/* ========================= */
+/* MOBILE FIXES (MATCH FIRST FILE SYSTEM)
+/* ========================= */
+
+@media (max-width: 600px) {
+  .page-wrapper {
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .card {
+    padding: 18px;
+    border-radius: 14px;
+
+    max-height: calc(100dvh - 32px);
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  button,
+  .claimBtn {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
